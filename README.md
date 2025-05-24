@@ -1,54 +1,16 @@
-# React + TypeScript + Vite
+# overlay-extension
+Overlay browser extension with React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# How to run
+1. npm run build
+2. chrome://extensions/
+3. enable Developer mode
+4. Click on Load unpacked button and upload dist folder
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+# Things to know
+- Injecting a React bundle script (like chat-app.umd.js) into the page via <script> tag often fails due to Content Security Policies (CSPs), especially on websites like Salesforce, GitHub, etc.
+  So, we are creating a single bundled content script that includes your React app. Check vite config for more details.
+- Because of above step it will not run in browser with this code.. if need we need to update vite config
+- Assets added in the assets folder usually takes path from browser url and appends path to it and image does not load, to fix it we are using extensions path to load images
+ `browser.runtime.getURL('assets/react.svg');`
+- As we are using Shadow DOM, to work inline css we are injecting CSS manually into Shadow DOM (Refer content.jsx file)
