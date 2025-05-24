@@ -1,0 +1,35 @@
+{
+    "manifest_version": 3,
+    "name": "Simple Extension",
+    "version": "1.0",
+    "description": "A simple Chrome extension example",
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ],
+    "permissions": [
+      "tabs",
+      "sidePanel",
+      "scripting"
+    ],
+    "action": {
+      "default_title": "Click me"
+    },
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "icons": {
+        "32": "vite.svg"
+    },
+    "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "*.svg",
+        "*.png"
+    ],
+      "matches": ["<all_urls>"]
+    }]
+}
